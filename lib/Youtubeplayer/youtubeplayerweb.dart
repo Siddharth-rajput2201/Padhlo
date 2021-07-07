@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
@@ -14,6 +15,7 @@ class YoutubePlayerWeb extends StatefulWidget {
 
 class _YoutubePlayerState extends State<YoutubePlayerWeb> {
   late YoutubePlayerController _controller;
+
   void runYoutubePlay()
   {
     _controller = YoutubePlayerController(
@@ -22,6 +24,24 @@ class _YoutubePlayerState extends State<YoutubePlayerWeb> {
         showControls: true,
         desktopMode: true,
         showFullscreenButton: true,
+        privacyEnhanced: true,
+        showVideoAnnotations: true ,
+        autoPlay: false,
+        enableCaption: true,
+        useHybridComposition: true,
+        color: 'red',
+      )
+    );
+  }
+
+  void runYoutubePlayWithoutFullScreenButton()
+  {
+    _controller = YoutubePlayerController(
+      initialVideoId: YoutubePlayerController.convertUrlToId(widget.url).toString(),
+      params: const YoutubePlayerParams(
+        showControls: true,
+        desktopMode: true,
+        showFullscreenButton: false,
         privacyEnhanced: true,
         showVideoAnnotations: true ,
         autoPlay: false,
@@ -50,7 +70,14 @@ class _YoutubePlayerState extends State<YoutubePlayerWeb> {
   
   @override
   void initState() {
-    runYoutubePlay();
+    if(kIsWeb)
+    {
+      runYoutubePlay();
+    }
+    else
+    {
+      runYoutubePlayWithoutFullScreenButton();
+    }
     youtubePlayerFullScreen();
     super.initState();
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:padhlo/Browser/Browser.dart';
 import 'package:padhlo/Mobile/Mobile.dart';
 import 'package:padhlo/Tablet/Tablet.dart';
@@ -8,6 +9,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(
     ChangeNotifierProvider(

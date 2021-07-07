@@ -1,10 +1,8 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:padhlo/ThemeProvider.dart';
 import 'package:padhlo/Util/Util.dart';
-import 'package:padhlo/Youtubeplayer/youtubeplayerandroid.dart';
 import 'package:padhlo/Youtubeplayer/youtubeplayerweb.dart';
 import 'package:provider/provider.dart';
 
@@ -13,17 +11,6 @@ class Mobile extends StatefulWidget {
 
   @override
   _MobileState createState() => _MobileState();
-}
-Widget player()
-{
-   if(kIsWeb)
-  {
-    return YoutubePlayerWeb(url: "https://www.youtube.com/watch?v=KfTtjdqLMrk",);
-  }
-  else
-  {
-    return  YoutubePlayerAndroid(url: "https://www.youtube.com/watch?v=KfTtjdqLMrk",);
-  }
 }
 class _MobileState extends State<Mobile> {
   @override
@@ -58,7 +45,7 @@ class _MobileState extends State<Mobile> {
       ),
       body: Center(
         child: SingleChildScrollView(
-                  child: Column(
+            child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
