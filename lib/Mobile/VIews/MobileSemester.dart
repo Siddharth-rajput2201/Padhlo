@@ -37,59 +37,62 @@ class _MobileSemesterState extends State<MobileSemester> {
             ))
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.all(15),
-        child : FutureBuilder(
-          future: Networking.getAllSemester(widget.semester),
-          //Networking.getAllData(),
-          builder: (_,snapshot)
-          {
-            //Text(padhlo![0].courses[0].course);
-            if(snapshot.hasData)
+      body: Scrollbar(
+          interactive: true,
+              child: Container(
+          padding: EdgeInsets.all(15),
+          child : FutureBuilder(
+            future: Networking.getAllSemester(widget.semester),
+            //Networking.getAllData(),
+            builder: (_,snapshot)
             {
-              //List<Padhlo>? padhlo = snapshot.data as List<Padhlo>?;
-              List<SpecificSemester>? specificSemester = snapshot.data as List<SpecificSemester>?;
-              return GridView.builder(
-                physics: BouncingScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //Text(padhlo![0].courses[0].course);
+              if(snapshot.hasData)
+              {
+                //List<Padhlo>? padhlo = snapshot.data as List<Padhlo>?;
+                List<SpecificSemester>? specificSemester = snapshot.data as List<SpecificSemester>?;
+                return GridView.builder(
+                  physics: BouncingScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 15,
+                    crossAxisSpacing: 15
+                  ),
+                  itemCount: specificSemester![0].courses.semesters.length ,
+                  //padhlo![0].courses.length,
+                  itemBuilder: (_,index)
+                  {
+                   return GestureDetector(
+                     onTap: (){
+                       Navigator.push(context,
+                          MaterialPageRoute(builder: (context)=>MobileSubject(
+                            course :  specificSemester[0].courses.course,
+                            semester : specificSemester[0].courses.semesters[index].sem.toString(),
+                          ),),);
+                     },
+                     child: MobileContainer(course: specificSemester[0].courses.semesters[index].sem.toString()),
+                     //course:padhlo[0].courses[index].course
+                     );
+                  },
+                );
+              }
+              else
+              {
+                return  GridView.count(
+                  physics: BouncingScrollPhysics(),
                   crossAxisCount: 2,
                   mainAxisSpacing: 15,
-                  crossAxisSpacing: 15
-                ),
-                itemCount: specificSemester![0].courses.semesters.length ,
-                //padhlo![0].courses.length,
-                itemBuilder: (_,index)
-                {
-                 return GestureDetector(
-                   onTap: (){
-                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context)=>MobileSubject(
-                          course :  specificSemester[0].courses.course,
-                          semester : specificSemester[0].courses.semesters[index].sem.toString(),
-                        ),),);
-                   },
-                   child: MobileContainer(course: specificSemester[0].courses.semesters[index].sem.toString()),
-                   //course:padhlo[0].courses[index].course
-                   );
-                },
-              );
+                  crossAxisSpacing: 15,
+                  children: [
+                   ShimmerContainer(),
+                   ShimmerContainer(),
+                   ShimmerContainer(),
+                   ShimmerContainer(),
+                  ],
+                );
+              }
             }
-            else
-            {
-              return  GridView.count(
-                physics: BouncingScrollPhysics(),
-                crossAxisCount: 2,
-                mainAxisSpacing: 15,
-                crossAxisSpacing: 15,
-                children: [
-                 ShimmerContainer(),
-                 ShimmerContainer(),
-                 ShimmerContainer(),
-                 ShimmerContainer(),
-                ],
-              );
-            }
-          }
+          ),
         ),
       ),
     );

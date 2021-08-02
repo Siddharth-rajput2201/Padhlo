@@ -5,7 +5,6 @@ import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class YoutubePlayerWeb extends StatefulWidget {
   final String url;
-
   const YoutubePlayerWeb({Key? key, required this.url}) : super(key: key);
   
 

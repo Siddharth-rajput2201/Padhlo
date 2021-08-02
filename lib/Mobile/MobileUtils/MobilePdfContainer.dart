@@ -23,10 +23,14 @@ class MobilePdfContainer extends StatelessWidget {
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(Icons.add_to_drive_outlined),
-            Center(child: Text("$course")),
+            Icon(Icons.add_to_drive_outlined,size: height*30,),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(child: Text("$course")),
+            ),
           ],
         ),
       ),

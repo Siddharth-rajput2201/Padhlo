@@ -109,18 +109,24 @@ class Units {
 class Topics {
   late String topic;
   late String youtubeUrl;
+  late String pdfName;
+  late String pdfUrl;
 
-  Topics({required this.topic,required this.youtubeUrl});
+  Topics({required this.topic,required this.youtubeUrl,required this.pdfName,required this.pdfUrl});
 
   Topics.fromJson(Map<String, dynamic> json) {
     topic = json['topic'];
     youtubeUrl = json['youtubeUrl'];
+    pdfName = json['pdfName'];
+    pdfUrl = json['pdfUrl'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['topic'] = this.topic;
     data['youtubeUrl'] = this.youtubeUrl;
+    data['pdfName'] = this.pdfName;
+    data['pdfUrl'] = this.pdfUrl;
     return data;
   }
 }

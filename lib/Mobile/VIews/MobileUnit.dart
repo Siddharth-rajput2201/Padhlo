@@ -38,64 +38,67 @@ class _MobileUnitState extends State<MobileUnit> {
             ))
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.all(15),
-        child : FutureBuilder(
-          future: Networking.getAllUnit(widget.course,widget.semester,widget.subject),
-          //Networking.getAllData(),
-          builder: (_,snapshot)
-          {
-            //Text(padhlo![0].courses[0].course);
-            if(snapshot.hasData)
+      body: Scrollbar(
+        interactive: true,
+              child: Container(
+          padding: EdgeInsets.all(15),
+          child : FutureBuilder(
+            future: Networking.getAllUnit(widget.course,widget.semester,widget.subject),
+            //Networking.getAllData(),
+            builder: (_,snapshot)
             {
-              //List<Padhlo>? padhlo = snapshot.data as List<Padhlo>?;
-              List<SpecificUnit>? specificUnit = snapshot.data as List<SpecificUnit>?;
-              return GridView.builder(
-                physics: BouncingScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //Text(padhlo![0].courses[0].course);
+              if(snapshot.hasData)
+              {
+                //List<Padhlo>? padhlo = snapshot.data as List<Padhlo>?;
+                List<SpecificUnit>? specificUnit = snapshot.data as List<SpecificUnit>?;
+                return GridView.builder(
+                  physics: BouncingScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 15,
+                    crossAxisSpacing: 15
+                  ),
+                  itemCount: specificUnit![0].courses.semesters.subjects.units.length ,
+                  //padhlo![0].courses.length,
+                  itemBuilder: (_,index)
+                  {
+                   return GestureDetector(
+                     onTap: (){
+                      //  Networking.getAllTopic("BCA", "1", "Physics", "1");
+                       Navigator.push(context,
+                          MaterialPageRoute(builder: (context)=>MobileTopic(
+                            course :  specificUnit[0].courses.course,
+                            semester : specificUnit[0].courses.semesters.sem.toString(),
+                            subject: specificUnit[0].courses.semesters.subjects.subject,
+                            unit : specificUnit[0].courses.semesters.subjects.units[index].unit.toString(),
+                            pdfName: specificUnit[0].courses.semesters.subjects.units[index].pdfName,
+                            pdfUrl: specificUnit[0].courses.semesters.subjects.units[index].pdfUrl,
+                          ),),);
+                     },
+                     child: MobileContainer(course: specificUnit[0].courses.semesters.subjects.units[index].unit.toString()),
+                     //course:padhlo[0].courses[index].course
+                     );
+                  },
+                );
+              }
+              else
+              {
+                return  GridView.count(
+                  physics: BouncingScrollPhysics(),
                   crossAxisCount: 2,
                   mainAxisSpacing: 15,
-                  crossAxisSpacing: 15
-                ),
-                itemCount: specificUnit![0].courses.semesters.subjects.units.length ,
-                //padhlo![0].courses.length,
-                itemBuilder: (_,index)
-                {
-                 return GestureDetector(
-                   onTap: (){
-                    //  Networking.getAllTopic("BCA", "1", "Physics", "1");
-                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context)=>MobileTopic(
-                          course :  specificUnit[0].courses.course,
-                          semester : specificUnit[0].courses.semesters.sem.toString(),
-                          subject: specificUnit[0].courses.semesters.subjects.subject,
-                          unit : specificUnit[0].courses.semesters.subjects.units[index].unit.toString(),
-                          pdfName: specificUnit[0].courses.semesters.subjects.units[index].pdfName,
-                          pdfUrl: specificUnit[0].courses.semesters.subjects.units[index].pdfUrl,
-                        ),),);
-                   },
-                   child: MobileContainer(course: specificUnit[0].courses.semesters.subjects.units[index].unit.toString()),
-                   //course:padhlo[0].courses[index].course
-                   );
-                },
-              );
+                  crossAxisSpacing: 15,
+                  children: [
+                   ShimmerContainer(),
+                   ShimmerContainer(),
+                   ShimmerContainer(),
+                   ShimmerContainer(),
+                  ],
+                );
+              }
             }
-            else
-            {
-              return  GridView.count(
-                physics: BouncingScrollPhysics(),
-                crossAxisCount: 2,
-                mainAxisSpacing: 15,
-                crossAxisSpacing: 15,
-                children: [
-                 ShimmerContainer(),
-                 ShimmerContainer(),
-                 ShimmerContainer(),
-                 ShimmerContainer(),
-                ],
-              );
-            }
-          }
+          ),
         ),
       ),
     );

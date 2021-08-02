@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //  printConstraints(constaints.maxWidth, constaints.maxHeight);
           return Tablet();
         } else {
-            print("BROWSER=============>");
+            // print("BROWSER=============>");
             // printConstraints(constaints.maxWidth , constaints.maxHeight);
           return Browser();
         }
