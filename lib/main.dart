@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:padhlo/Browser/Browser.dart';
-import 'package:padhlo/Mobile/Mobile.dart';
+import 'package:padhlo/Mobile/VIews/Mobile.dart';
 import 'package:padhlo/Tablet/Tablet.dart';
 import 'package:padhlo/ThemeProvider.dart';
 import 'package:provider/provider.dart';
@@ -57,15 +57,15 @@ class _MyHomePageState extends State<MyHomePage> {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constaints) {
         if (constaints.maxWidth <= mobileLimit) {
-           printConstraints(constaints.maxWidth, constaints.maxHeight);
+          //  printConstraints(constaints.maxWidth, constaints.maxHeight);
           return Mobile();
         } else if (constaints.maxWidth > mobileLimit &&
             constaints.maxWidth < tabletLimit) {
-           printConstraints(constaints.maxWidth, constaints.maxHeight);
+          //  printConstraints(constaints.maxWidth, constaints.maxHeight);
           return Tablet();
         } else {
             print("BROWSER=============>");
-            printConstraints(constaints.maxWidth , constaints.maxHeight);
+            // printConstraints(constaints.maxWidth , constaints.maxHeight);
           return Browser();
         }
       },

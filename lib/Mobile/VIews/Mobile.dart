@@ -1,9 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:padhlo/Mobile/MobileUtils/MobileContainer.dart';
+import 'package:padhlo/Mobile/VIews/MobileCourses.dart';
 import 'package:padhlo/ThemeProvider.dart';
 import 'package:padhlo/Util/Util.dart';
-import 'package:padhlo/Youtubeplayer/youtubeplayerweb.dart';
 import 'package:provider/provider.dart';
 
 class Mobile extends StatefulWidget {
@@ -44,15 +45,22 @@ class _MobileState extends State<Mobile> {
         ],
       ),
       body: Center(
-        child: SingleChildScrollView(
-            child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              YoutubePlayerWeb(url: "https://www.youtube.com/watch?v=KfTtjdqLMrk",)
-            ],
+        child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [ 
+                    GestureDetector(
+                      onTap: ()=>{
+                          // Networking.getAllData()
+                        Navigator.push(context,
+                        MaterialPageRoute(builder: (context)=>MobileCourses()))
+                      },
+                      child: MobileContainer(course:"Notes")
+                      ),
+                    MobileContainer(course:"Question Papers")
+        //  YoutubePlayerWeb(url: "https://www.youtube.com/watch?v=KfTtjdqLMrk",)
+        ],
           ),
-        ),
       ),
     );
   }

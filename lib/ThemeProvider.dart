@@ -13,6 +13,8 @@ class ThemePrefrences with ChangeNotifier {
     brightness: Brightness.dark,
     scaffoldBackgroundColor: ThemeColor.kdarkThemeBackGroundColor,
     backgroundColor: ThemeColor.kdarkThemeContainerColor,
+    indicatorColor: ThemeColor.kdarkThemeShimmerDarkColor,
+    splashColor:ThemeColor.kdarkThemeShimmerLightColor, 
   );
 
   ThemePrefrences(isDarkMode)

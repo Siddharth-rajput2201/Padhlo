@@ -28,25 +28,6 @@ class _YoutubePlayerState extends State<YoutubePlayerWeb> {
         showVideoAnnotations: true ,
         autoPlay: false,
         enableCaption: true,
-        useHybridComposition: true,
-        color: 'red',
-      )
-    );
-  }
-
-  void runYoutubePlayWithoutFullScreenButton()
-  {
-    _controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayerController.convertUrlToId(widget.url).toString(),
-      params: const YoutubePlayerParams(
-        showControls: true,
-        desktopMode: true,
-        showFullscreenButton: false,
-        privacyEnhanced: true,
-        showVideoAnnotations: true ,
-        autoPlay: false,
-        enableCaption: true,
-        useHybridComposition: true,
         color: 'red',
       )
     );
@@ -70,15 +51,8 @@ class _YoutubePlayerState extends State<YoutubePlayerWeb> {
   
   @override
   void initState() {
-    if(kIsWeb)
-    {
       runYoutubePlay();
-    }
-    else
-    {
-      runYoutubePlayWithoutFullScreenButton();
-    }
-    youtubePlayerFullScreen();
+      youtubePlayerFullScreen();
     super.initState();
   }
 
@@ -87,15 +61,12 @@ class _YoutubePlayerState extends State<YoutubePlayerWeb> {
     _controller.close();
     super.dispose();
   }
-  @override
-  void deactivate() {
-    _controller.pause();
-    super.deactivate();
-  }
+
 
   @override
   Widget build(BuildContext context) {
     const player = YoutubePlayerIFrame();
     return YoutubePlayerControllerProvider(controller: _controller, child: player);
   }
+
 }

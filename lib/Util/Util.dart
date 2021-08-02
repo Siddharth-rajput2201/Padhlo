@@ -28,6 +28,8 @@ class ThemeColor
 {
    static const Color kdarkThemeBackGroundColor = Color(0xFF171721);
    static const Color kdarkThemeContainerColor = Color(0xFF2C2C34);
+   static const Color kdarkThemeShimmerDarkColor = Color(0xFF353d43);
+   static const Color kdarkThemeShimmerLightColor = Color(0xFF7d8286);
 } 
 
 class StaticText
@@ -36,6 +38,7 @@ class StaticText
   static const String kToTheStudent = "To The Student";
   static const String kByTheStudent = "By The Student";
   static const String kForTheStudent = "For The Student";
+  static const String kCourses = "Courses";
 }
 
 class DeviceConstraints
