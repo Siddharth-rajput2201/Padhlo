@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:padhlo/Networking/Api.dart';
 import 'package:padhlo/Networking/Class/Courses.dart';
 import 'dart:convert';
 import 'package:padhlo/Networking/Class/Padhlo.dart';
@@ -8,9 +9,10 @@ import 'package:padhlo/Networking/Class/Topics.dart';
 import 'package:padhlo/Networking/Class/Units.dart';
 
 class Networking {
+
   static Future<List<Padhlo>> getAllData() async {
     http.Response response;
-    response = await http.get(Uri.parse("http://192.168.0.107:3000/alldata"));
+    response = await http.get(Uri.parse(Api.getAllData));
     //print(response.body);
     List data;
     if (response.statusCode == 200) {
@@ -25,7 +27,8 @@ class Networking {
 
   static Future<List<SpecificCourse>> getAllCourses() async {
     http.Response response;
-    response = await http.post(Uri.parse("http://192.168.0.107:3000/courses"));
+    print(Api.getAllCourse);
+    response = await http.post(Uri.parse(Api.getAllCourse));
     List data;
     if (response.statusCode == 200) {
       data = json.decode(response.body);
@@ -40,7 +43,7 @@ class Networking {
   static Future<List<SpecificSemester>> getAllSemester(String course) async {
     http.Response response;
     response = await http.post(
-      Uri.parse("http://192.168.0.107:3000/semesters"),
+      Uri.parse(Api.getSemester),
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
@@ -61,7 +64,7 @@ class Networking {
   static Future<List<SpecificSubject>> getAllSubject(String course,String semester) async {
   http.Response response;
   response = await http.post(
-    Uri.parse("http://192.168.0.107:3000/subjects"),
+    Uri.parse(Api.getSubject),
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
@@ -85,7 +88,7 @@ class Networking {
   static Future<List<SpecificUnit>> getAllUnit(String course,String semester,String subject) async {
   http.Response response;
   response = await http.post(
-    Uri.parse("http://192.168.0.107:3000/units"),
+    Uri.parse(Api.getUnit),
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
@@ -110,7 +113,7 @@ class Networking {
   static Future<List<SpecificTopic>> getAllTopic(String course,String semester,String subject,String unit) async {
   http.Response response;
   response = await http.post(
-    Uri.parse("http://192.168.0.107:3000/topics"),
+    Uri.parse(Api.getTopic),
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
