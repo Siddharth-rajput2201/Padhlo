@@ -4,6 +4,7 @@ import 'package:padhlo/Browser/Browser.dart';
 import 'package:padhlo/Mobile/VIews/Mobile.dart';
 import 'package:padhlo/Tablet/Tablet.dart';
 import 'package:padhlo/ThemeProvider.dart';
+import 'package:padhlo/Util/Util.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
           builder: (context, themePreference , child){
           return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Padhlo',
+        title: StaticText.kAppName,
         theme: themePreference.getTheme,
         home: MyHomePage(),
       );

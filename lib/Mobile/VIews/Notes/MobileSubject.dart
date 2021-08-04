@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:padhlo/Mobile/MobileUtils/MobileContainer.dart';
 import 'package:padhlo/Mobile/MobileUtils/ShimmerContainer.dart';
-import 'package:padhlo/Mobile/VIews/MobileSubject.dart';
-import 'package:padhlo/Networking/Class/Semesters.dart';
+import 'package:padhlo/Mobile/VIews/Notes/MobileUnit.dart';
+import 'package:padhlo/Networking/Class/Notes/Subjects.dart';
 import 'package:padhlo/Networking/networking.dart';
 import 'package:padhlo/ThemeProvider.dart';
+import 'package:padhlo/Util/Util.dart';
 import 'package:provider/provider.dart';
 
-class MobileSemester extends StatefulWidget {
+class MobileSubject extends StatefulWidget {
+  final String course;
   final String semester;
-
-  const MobileSemester({ Key? key , required this.semester}) : super(key: key);
+  const MobileSubject({ Key? key ,required this.course , required this.semester}) : super(key: key);
 
   @override
-  _MobileSemesterState createState() => _MobileSemesterState();
+  _MobileSubjectState createState() => _MobileSubjectState();
 }
 
-class _MobileSemesterState extends State<MobileSemester> {
+class _MobileSubjectState extends State<MobileSubject> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: Text("Semester"),
+        title: Text(StaticText.kSubject),
         actions: [
           GestureDetector
           (
@@ -38,11 +39,11 @@ class _MobileSemesterState extends State<MobileSemester> {
         ],
       ),
       body: Scrollbar(
-          interactive: true,
+              interactive: true,
               child: Container(
           padding: EdgeInsets.all(15),
           child : FutureBuilder(
-            future: Networking.getAllSemester(widget.semester),
+            future: Networking.getAllSubject(widget.course,widget.semester),
             //Networking.getAllData(),
             builder: (_,snapshot)
             {
@@ -50,7 +51,7 @@ class _MobileSemesterState extends State<MobileSemester> {
               if(snapshot.hasData)
               {
                 //List<Padhlo>? padhlo = snapshot.data as List<Padhlo>?;
-                List<SpecificSemester>? specificSemester = snapshot.data as List<SpecificSemester>?;
+                List<SpecificSubject>? specificSubject = snapshot.data as List<SpecificSubject>?;
                 return GridView.builder(
                   physics: BouncingScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -58,19 +59,20 @@ class _MobileSemesterState extends State<MobileSemester> {
                     mainAxisSpacing: 15,
                     crossAxisSpacing: 15
                   ),
-                  itemCount: specificSemester![0].courses.semesters.length ,
+                  itemCount: specificSubject![0].courses.semesters.subjects.length ,
                   //padhlo![0].courses.length,
                   itemBuilder: (_,index)
                   {
                    return GestureDetector(
                      onTap: (){
+                      // Networking.getAllUnit("BCA","1","Physics");
                        Navigator.push(context,
-                          MaterialPageRoute(builder: (context)=>MobileSubject(
-                            course :  specificSemester[0].courses.course,
-                            semester : specificSemester[0].courses.semesters[index].sem.toString(),
-                          ),),);
+                          MaterialPageRoute(builder: (context)=>MobileUnit(
+                            course: specificSubject[0].courses.course,
+                            semester: specificSubject[0].courses.semesters.sem.toString(),
+                            subject: specificSubject[0].courses.semesters.subjects[index].subject),),);
                      },
-                     child: MobileContainer(course: specificSemester[0].courses.semesters[index].sem.toString()),
+                     child: MobileContainer(course: specificSubject[0].courses.semesters.subjects[index].subject),
                      //course:padhlo[0].courses[index].course
                      );
                   },

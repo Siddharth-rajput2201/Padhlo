@@ -5,7 +5,7 @@ import 'package:padhlo/Util/Util.dart';
 import 'package:padhlo/Youtubeplayer/youtubeplayerweb.dart';
 import 'package:provider/provider.dart';
 
-import '../../urlLauncher.dart';
+import '../../../urlLauncher.dart';
 
 class MobileTopicVideo extends StatefulWidget {
   final String youtubeUrl;
@@ -73,7 +73,7 @@ class _MobileTopicVideoState extends State<MobileTopicVideo> {
           child: Column(
             crossAxisAlignment:  CrossAxisAlignment.start,
             children: [
-                Text("Topic Pdf : ",style: TextStyle(fontSize: height*20),),
+                Text(StaticText.kTopicPdf,style: TextStyle(fontSize: height*20),),
                   SizedBox(
                   height: height * 130,
                   width: width * 180,

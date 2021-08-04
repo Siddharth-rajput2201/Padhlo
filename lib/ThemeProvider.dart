@@ -7,14 +7,37 @@ class ThemePrefrences with ChangeNotifier {
  
   late ThemeData _selectedTheme;
 
-  ThemeData light = ThemeData.light();
-  ThemeData dark = ThemeData.dark().copyWith(
+  ThemeData light = ThemeData.light().copyWith(
+      textTheme: ThemeData.dark().copyWith().textTheme.apply(
+      fontFamily: 'PatrickHand',
+      bodyColor: Colors.black
+    ),
+    primaryTextTheme: ThemeData.dark().copyWith().textTheme.apply(
+      fontFamily: 'PatrickHand',
+      bodyColor: Colors.black
+    ),
+    appBarTheme: AppBarTheme(iconTheme: IconThemeData(color: Colors.black)),
+    primaryColor: ThemeColor.klightThemeContainerColor,
+    scaffoldBackgroundColor: ThemeColor.klighThemeBackGroundColor,
+    backgroundColor: ThemeColor.klightThemeContainerColor,
+    indicatorColor: ThemeColor.klightThemeBaseColor,
+    splashColor: ThemeColor.klightThemeHighlightColor,
+    brightness: Brightness.light
+  );
+  ThemeData dark = ThemeData.dark().copyWith( 
+    appBarTheme: AppBarTheme(iconTheme: IconThemeData(color: Colors.white)),
     primaryColor: ThemeColor.kdarkThemeBackGroundColor,
     brightness: Brightness.dark,
+    indicatorColor: ThemeColor.kdarkThemeContainerColor,
     scaffoldBackgroundColor: ThemeColor.kdarkThemeBackGroundColor,
     backgroundColor: ThemeColor.kdarkThemeContainerColor,
-    indicatorColor: ThemeColor.kdarkThemeShimmerDarkColor,
-    splashColor:ThemeColor.kdarkThemeShimmerLightColor, 
+    splashColor:ThemeColor.kdarkThemeShimmerLightColor,
+    textTheme: ThemeData.dark().copyWith().textTheme.apply(
+      fontFamily: 'PatrickHand'
+    ),
+    primaryTextTheme: ThemeData.dark().copyWith().textTheme.apply(
+      fontFamily: 'PatrickHand',
+    ),
   );
 
   ThemePrefrences(isDarkMode)

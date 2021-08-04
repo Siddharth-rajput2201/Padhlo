@@ -13,7 +13,7 @@ class _ShimmerContainerState extends State<ShimmerContainer> {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-        baseColor: Theme.of(context).backgroundColor,
+        baseColor: Theme.of(context).indicatorColor,
         highlightColor: Theme.of(context).splashColor,
         child: MobileContainer(course: "Padhlo"));
   }

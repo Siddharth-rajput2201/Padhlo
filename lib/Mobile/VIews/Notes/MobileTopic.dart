@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:padhlo/Mobile/MobileUtils/MobileListContainer.dart';
 import 'package:padhlo/Mobile/MobileUtils/MobilePdfContainer.dart';
 import 'package:padhlo/Mobile/MobileUtils/ShimmerListContainer.dart';
-import 'package:padhlo/Mobile/VIews/MobileTopicVideo.dart';
-import 'package:padhlo/Networking/Class/Topics.dart';
+import 'package:padhlo/Mobile/VIews/Notes/MobileTopicVideo.dart';
+import 'package:padhlo/Networking/Class/Notes/Topics.dart';
 import 'package:padhlo/Networking/networking.dart';
 import 'package:padhlo/ThemeProvider.dart';
 import 'package:padhlo/Util/Util.dart';
@@ -42,7 +42,7 @@ class _MobileTopicState extends State<MobileTopic> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: Text("TOPIC"),
+        title: Text(StaticText.kTopic),
         actions: [
           GestureDetector(
               onTap: () {
@@ -64,7 +64,7 @@ class _MobileTopicState extends State<MobileTopic> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("UNIT PDF : ", style: TextStyle(fontSize: height * 20)),
+              Text(StaticText.kUnitPdf, style: TextStyle(fontSize: height * 20)),
               SizedBox(
                 height: height * 130,
                 width: width * 180,
@@ -72,7 +72,7 @@ class _MobileTopicState extends State<MobileTopic> {
                     onTap: () => {launchDrive(widget.pdfUrl)},
                     child: MobilePdfContainer(course: widget.pdfName)),
               ),
-              Text("TOPICS : ", style: TextStyle(fontSize: height * 20)),
+              Text(StaticText.kTopics, style: TextStyle(fontSize: height * 20)),
               Expanded(
                 child: FutureBuilder(
                     future: Networking.getAllTopic(widget.course,

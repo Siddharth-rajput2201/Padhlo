@@ -2,7 +2,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:padhlo/Mobile/MobileUtils/MobileContainer.dart';
-import 'package:padhlo/Mobile/VIews/MobileCourses.dart';
+import 'package:padhlo/Mobile/VIews/Notes/MobileCourses.dart';
+import 'package:padhlo/Mobile/VIews/QuestionPaper/MobileQuestionPaperCourses.dart';
 import 'package:padhlo/ThemeProvider.dart';
 import 'package:padhlo/Util/Util.dart';
 import 'package:provider/provider.dart';
@@ -25,15 +26,25 @@ class _MobileState extends State<Mobile> {
           totalRepeatCount: 1,
           animatedTexts: [
             TypewriterAnimatedText(StaticText.kAppName,
-                speed: const Duration(milliseconds: 200)),
+                speed: const Duration(milliseconds: 200),
+                // textStyle: TextStyle(fontFamily: 'PatrickHand')
+                ),
             TypewriterAnimatedText(StaticText.kToTheStudent,
-                speed: const Duration(milliseconds: 200)),
+                speed: const Duration(milliseconds: 200),
+                // textStyle: TextStyle(fontFamily: 'PatrickHand')
+                ),
             TypewriterAnimatedText(StaticText.kByTheStudent,
-                speed: const Duration(milliseconds: 200)),
+                speed: const Duration(milliseconds: 200),
+                // textStyle: TextStyle(fontFamily: 'PatrickHand')
+                ),
             TypewriterAnimatedText(StaticText.kForTheStudent,
-                speed: const Duration(milliseconds: 200)),
+                speed: const Duration(milliseconds: 200),
+                // textStyle: TextStyle(fontFamily: 'PatrickHand')
+                ),
             TypewriterAnimatedText(StaticText.kAppName,
-                speed: const Duration(milliseconds: 200)),
+                speed: const Duration(milliseconds: 200),
+                // textStyle: TextStyle(fontFamily: 'PatrickHand')
+                ),
           ],
         ),
         actions: [
@@ -66,7 +77,12 @@ class _MobileState extends State<Mobile> {
                       },
                   child: MobileContainer(course: "Notes")),
                   SizedBox(height: 30),
-              MobileContainer(course: "Question Papers")
+              GestureDetector(
+                onTap: ()=>{
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> MobileQuestionPaperCourses()))
+                },
+                child: MobileContainer(course: "Question Papers")
+                )
               //  YoutubePlayerWeb(url: "https://www.youtube.com/watch?v=KfTtjdqLMrk",)
             ],
           ),

@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:padhlo/Mobile/MobileUtils/MobileContainer.dart';
 import 'package:padhlo/Mobile/MobileUtils/ShimmerContainer.dart';
-import 'package:padhlo/Mobile/VIews/MobileUnit.dart';
-import 'package:padhlo/Networking/Class/Subjects.dart';
+import 'package:padhlo/Mobile/VIews/Notes/MobileTopic.dart';
+import 'package:padhlo/Networking/Class/Notes/Units.dart';
 import 'package:padhlo/Networking/networking.dart';
 import 'package:padhlo/ThemeProvider.dart';
+import 'package:padhlo/Util/Util.dart';
 import 'package:provider/provider.dart';
 
-class MobileSubject extends StatefulWidget {
+class MobileUnit extends StatefulWidget {
   final String course;
   final String semester;
-  const MobileSubject({ Key? key ,required this.course , required this.semester}) : super(key: key);
+  final String subject;
+  const MobileUnit({ Key? key ,required this.course, required this.semester , required this.subject}) : super(key: key);
 
   @override
-  _MobileSubjectState createState() => _MobileSubjectState();
+  _MobileUnitState createState() => _MobileUnitState();
 }
 
-class _MobileSubjectState extends State<MobileSubject> {
+class _MobileUnitState extends State<MobileUnit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: Text("Subject"),
+        title: Text(StaticText.kUnit),
         actions: [
           GestureDetector
           (
@@ -38,11 +40,11 @@ class _MobileSubjectState extends State<MobileSubject> {
         ],
       ),
       body: Scrollbar(
-              interactive: true,
+        interactive: true,
               child: Container(
           padding: EdgeInsets.all(15),
           child : FutureBuilder(
-            future: Networking.getAllSubject(widget.course,widget.semester),
+            future: Networking.getAllUnit(widget.course,widget.semester,widget.subject),
             //Networking.getAllData(),
             builder: (_,snapshot)
             {
@@ -50,7 +52,7 @@ class _MobileSubjectState extends State<MobileSubject> {
               if(snapshot.hasData)
               {
                 //List<Padhlo>? padhlo = snapshot.data as List<Padhlo>?;
-                List<SpecificSubject>? specificSubject = snapshot.data as List<SpecificSubject>?;
+                List<SpecificUnit>? specificUnit = snapshot.data as List<SpecificUnit>?;
                 return GridView.builder(
                   physics: BouncingScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -58,20 +60,24 @@ class _MobileSubjectState extends State<MobileSubject> {
                     mainAxisSpacing: 15,
                     crossAxisSpacing: 15
                   ),
-                  itemCount: specificSubject![0].courses.semesters.subjects.length ,
+                  itemCount: specificUnit![0].courses.semesters.subjects.units.length ,
                   //padhlo![0].courses.length,
                   itemBuilder: (_,index)
                   {
                    return GestureDetector(
                      onTap: (){
-                      // Networking.getAllUnit("BCA","1","Physics");
+                      //  Networking.getAllTopic("BCA", "1", "Physics", "1");
                        Navigator.push(context,
-                          MaterialPageRoute(builder: (context)=>MobileUnit(
-                            course: specificSubject[0].courses.course,
-                            semester: specificSubject[0].courses.semesters.sem.toString(),
-                            subject: specificSubject[0].courses.semesters.subjects[index].subject),),);
+                          MaterialPageRoute(builder: (context)=>MobileTopic(
+                            course :  specificUnit[0].courses.course,
+                            semester : specificUnit[0].courses.semesters.sem.toString(),
+                            subject: specificUnit[0].courses.semesters.subjects.subject,
+                            unit : specificUnit[0].courses.semesters.subjects.units[index].unit.toString(),
+                            pdfName: specificUnit[0].courses.semesters.subjects.units[index].pdfName,
+                            pdfUrl: specificUnit[0].courses.semesters.subjects.units[index].pdfUrl,
+                          ),),);
                      },
-                     child: MobileContainer(course: specificSubject[0].courses.semesters.subjects[index].subject),
+                     child: MobileContainer(course: specificUnit[0].courses.semesters.subjects.units[index].unit.toString()),
                      //course:padhlo[0].courses[index].course
                      );
                   },
