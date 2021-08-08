@@ -18,6 +18,9 @@ class MobileQuestionPaperSubjects extends StatefulWidget {
 }
 
 class _MobileQuestionPaperSubjectsState extends State<MobileQuestionPaperSubjects> {
+  List<QuestionpaperSpecificSubject> specificSubject = [];
+  List<Subjects> _searchResult = [];
+  TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,63 +41,161 @@ class _MobileQuestionPaperSubjectsState extends State<MobileQuestionPaperSubject
             ))
         ],
       ),
-      body: Scrollbar(
-              interactive: true,
-              child: Container(
-          padding: EdgeInsets.all(15),
-          child : FutureBuilder(
-            future: Networking.getAllQuestionpaperSubject(widget.course,widget.semester),
-            //Networking.getAllData(),
-            builder: (_,snapshot)
-            {
-              //Text(padhlo![0].courses[0].course);
-              if(snapshot.hasData)
-              {
-                //List<Padhlo>? padhlo = snapshot.data as List<Padhlo>?;
-                List<QuestionpaperSpecificSubject>? specificSubject = snapshot.data as List<QuestionpaperSpecificSubject>?;
-                return GridView.builder(
-                  physics: BouncingScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 15,
-                    crossAxisSpacing: 15
-                  ),
-                  itemCount: specificSubject![0].courses.semesters.subjects.length ,
-                  //padhlo![0].courses.length,
-                  itemBuilder: (_,index)
+      body: Column(
+        children: [
+          searchBar(context),
+          Expanded(
+            child: Scrollbar(
+                    interactive: true,
+                    child: Container(
+                padding: EdgeInsets.all(15),
+                child : FutureBuilder(
+                  future: Networking.getAllQuestionpaperSubject(widget.course,widget.semester),
+                  //Networking.getAllData(),
+                  builder: (_,snapshot)
                   {
-                   return GestureDetector(
-                     onTap: (){
-                      // Networking.getAllUnit("BCA","1","Physics");
-                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context)=>MobileQuestionPaperYear(
-                            course: specificSubject[0].courses.course,
-                            semester: specificSubject[0].courses.semesters.sem.toString(),
-                            subject: specificSubject[0].courses.semesters.subjects[index].subject),),);
-                     },
-                     child: MobileContainer(course: specificSubject[0].courses.semesters.subjects[index].subject),
-                     //course:padhlo[0].courses[index].course
-                     );
-                  },
-                );
-              }
-              else
-              {
-                return  GridView.count(
-                  physics: BouncingScrollPhysics(),
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 15,
-                  crossAxisSpacing: 15,
-                  children: [
-                   ShimmerContainer(),
-                   ShimmerContainer(),
-                   ShimmerContainer(),
-                   ShimmerContainer(),
-                  ],
-                );
-              }
-            }
+                    //Text(padhlo![0].courses[0].course);
+                    if(snapshot.hasData)
+                    {
+                      //List<Padhlo>? padhlo = snapshot.data as List<Padhlo>?;
+                      specificSubject = (snapshot.data as List<QuestionpaperSpecificSubject>?)!;
+                      return _searchResult.length != 0 ||
+                                      searchController.text.isNotEmpty ? GridView.builder(
+                        physics: BouncingScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 15,
+                          crossAxisSpacing: 15
+                        ),
+                        itemCount: _searchResult.length,
+                        //padhlo![0].courses.length,
+                        itemBuilder: (_,index)
+                        {
+                         return Material(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(40),
+                                    ),
+                                    color: Theme.of(context).backgroundColor,
+                                    child: InkWell(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(40),
+                                        ),
+                           onTap: (){
+                            // Networking.getAllUnit("BCA","1","Physics");
+                             Navigator.push(context,
+                                MaterialPageRoute(builder: (context)=>MobileQuestionPaperYear(
+                                  course: widget.course,
+                                  semester: widget.semester,
+                                  subject: _searchResult[index].subject),),).then((_){
+                                         FocusScope.of(context).unfocus();
+                                         searchController.clear();        
+                                         _searchResult.clear();                                   
+                                        });
+                           },
+                           child: MobileContainer(course: _searchResult[index].subject),
+                           //course:padhlo[0].courses[index].course
+                           ),);
+                        },
+                      ) : GridView.builder(
+                        physics: BouncingScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 15,
+                          crossAxisSpacing: 15
+                        ),
+                        itemCount: specificSubject[0].courses.semesters.subjects.length ,
+                        //padhlo![0].courses.length,
+                        itemBuilder: (_,index)
+                        {
+                         return Material(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(40),
+                                    ),
+                                    color: Theme.of(context).backgroundColor,
+                                    child: InkWell(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(40),
+                                        ),
+                           onTap: (){
+                            // Networking.getAllUnit("BCA","1","Physics");
+                             Navigator.push(context,
+                                MaterialPageRoute(builder: (context)=>MobileQuestionPaperYear(
+                                  course: specificSubject[0].courses.course,
+                                  semester: specificSubject[0].courses.semesters.sem.toString(),
+                                  subject: specificSubject[0].courses.semesters.subjects[index].subject),),);
+                           },
+                           child: MobileContainer(course: specificSubject[0].courses.semesters.subjects[index].subject),
+                           //course:padhlo[0].courses[index].course
+                           ),);
+                        },
+                      );
+                    }
+                    else
+                    {
+                      return  GridView.count(
+                        physics: BouncingScrollPhysics(),
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 15,
+                        crossAxisSpacing: 15,
+                        children: [
+                         ShimmerContainer(),
+                         ShimmerContainer(),
+                         ShimmerContainer(),
+                         ShimmerContainer(),
+                        ],
+                      );
+                    }
+                  }
+                ),
+              ),
+            ),
           ),
+        ],
+      ),
+    );
+  }
+  
+  Widget searchBar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+          left: 15.0, right: 15.0, top: 10.0, bottom: 10.0),
+      child: Container(
+        child: TextField(
+          keyboardType: TextInputType.text,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+                borderRadius : BorderRadius.circular(20)
+              ),
+              hintText: StaticText.kSearch, 
+              prefixIcon: Icon(Icons.search),
+              suffixIcon: GestureDetector(
+                onTap: (){
+                  FocusScope.of(context).unfocus();
+                  searchController.clear();
+                  _searchResult.clear();
+                },
+                child: Icon(Icons.cancel_rounded)
+                )
+              ),
+          onChanged: (value) async {
+           if(specificSubject.isNotEmpty)
+           {
+            _searchResult.clear();
+            if (value.isEmpty) {
+              setState(() {});
+              return;
+            }
+            setState(() {
+            specificSubject[0].courses.semesters.subjects.forEach((searchValue) {
+              if (searchValue.subject.toLowerCase().contains(value.toLowerCase())) {  
+                print(searchValue.subject);
+                _searchResult.add(searchValue);  
+              }
+            });
+            });
+           }
+          },
+          controller: searchController,
         ),
       ),
     );

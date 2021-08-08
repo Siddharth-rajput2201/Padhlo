@@ -58,42 +58,40 @@ class _MobileTopicVideoState extends State<MobileTopicVideo> {
               YoutubePlayerWeb(
                 url: widget.youtubeUrl,
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                StaticText.kTopicPdf,
+                style: TextStyle(fontSize: height * 20),
+                ),
+              ),
               topicPdf(widget.pdfUrl, widget.pdfName, height, width),
             ],
           ),
         ));
   }
 
-  Widget topicPdf(String pdfUrl, String pdfName,double height, double width) {
-    if(pdfUrl.isNotEmpty)
-    {
+  Widget topicPdf(String pdfUrl, String pdfName, double height, double width) {
+    if (pdfUrl.isNotEmpty) {
       return Padding(
         padding: const EdgeInsets.all(10.0),
         child: SizedBox(
-          child: Column(
-            crossAxisAlignment:  CrossAxisAlignment.start,
-            children: [
-                Text(StaticText.kTopicPdf,style: TextStyle(fontSize: height*20),),
-                  SizedBox(
-                  height: height * 130,
-                  width: width * 180,
-                    child: 
-                    GestureDetector(
-                      onTap: ()=>{
-                        launchDrive(widget.pdfUrl)
-                      },
-                      child: MobilePdfContainer(course: widget.pdfName)
-                      ),
-                  ),
-            ],
+          child: Material(
+            borderRadius: BorderRadius.all(
+              Radius.circular(40),
+            ),
+            color: Theme.of(context).backgroundColor,
+            child: InkWell(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(40),
+                ),
+                onTap: () => {launchDrive(widget.pdfUrl)},
+                child: MobilePdfContainer(course: widget.pdfName)),
           ),
         ),
       );
-    }
-    else
-    {
+    } else {
       return SizedBox();
     }
   }
-
 }

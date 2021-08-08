@@ -11,7 +11,7 @@ class MobileContainer extends StatelessWidget {
         MediaQuery.of(context).size.height / DeviceConstraints.kHeight;
     final double width =
         MediaQuery.of(context).size.width / DeviceConstraints.kWidth;
-    return Container(
+    return Ink(
       height: height * 200,
       width: width * 250,
       decoration: BoxDecoration(

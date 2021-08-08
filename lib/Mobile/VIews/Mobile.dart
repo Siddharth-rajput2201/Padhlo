@@ -25,26 +25,31 @@ class _MobileState extends State<Mobile> {
         title: AnimatedTextKit(
           totalRepeatCount: 1,
           animatedTexts: [
-            TypewriterAnimatedText(StaticText.kAppName,
-                speed: const Duration(milliseconds: 200),
-                // textStyle: TextStyle(fontFamily: 'PatrickHand')
-                ),
-            TypewriterAnimatedText(StaticText.kToTheStudent,
-                speed: const Duration(milliseconds: 200),
-                // textStyle: TextStyle(fontFamily: 'PatrickHand')
-                ),
-            TypewriterAnimatedText(StaticText.kByTheStudent,
-                speed: const Duration(milliseconds: 200),
-                // textStyle: TextStyle(fontFamily: 'PatrickHand')
-                ),
-            TypewriterAnimatedText(StaticText.kForTheStudent,
-                speed: const Duration(milliseconds: 200),
-                // textStyle: TextStyle(fontFamily: 'PatrickHand')
-                ),
-            TypewriterAnimatedText(StaticText.kAppName,
-                speed: const Duration(milliseconds: 200),
-                // textStyle: TextStyle(fontFamily: 'PatrickHand')
-                ),
+            TypewriterAnimatedText(
+              StaticText.kAppName,
+              speed: const Duration(milliseconds: 200),
+              // textStyle: TextStyle(fontFamily: 'PatrickHand')
+            ),
+            TypewriterAnimatedText(
+              StaticText.kToTheStudent,
+              speed: const Duration(milliseconds: 200),
+              // textStyle: TextStyle(fontFamily: 'PatrickHand')
+            ),
+            TypewriterAnimatedText(
+              StaticText.kByTheStudent,
+              speed: const Duration(milliseconds: 200),
+              // textStyle: TextStyle(fontFamily: 'PatrickHand')
+            ),
+            TypewriterAnimatedText(
+              StaticText.kForTheStudent,
+              speed: const Duration(milliseconds: 200),
+              // textStyle: TextStyle(fontFamily: 'PatrickHand')
+            ),
+            TypewriterAnimatedText(
+              StaticText.kAppName,
+              speed: const Duration(milliseconds: 200),
+              // textStyle: TextStyle(fontFamily: 'PatrickHand')
+            ),
           ],
         ),
         actions: [
@@ -68,21 +73,41 @@ class _MobileState extends State<Mobile> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              GestureDetector(
+              Material(
+                borderRadius: BorderRadius.all(
+                      Radius.circular(40),
+                    ),
+                child: InkWell(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(40),
+                    ),
+                    onTap: () => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MobileCourses()))
+                        },
+                    child: MobileContainer(course: "Notes")),
+              ),
+              SizedBox(height: 30),
+               Material(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(40),
+                ),
+                color: Theme.of(context).backgroundColor,
+                child: InkWell(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(40),
+                    ),
                   onTap: () => {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MobileCourses()))
+                                builder: (context) =>
+                                    MobileQuestionPaperCourses()))
                       },
-                  child: MobileContainer(course: "Notes")),
-                  SizedBox(height: 30),
-              GestureDetector(
-                onTap: ()=>{
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> MobileQuestionPaperCourses()))
-                },
-                child: MobileContainer(course: "Question Papers")
-                )
+                  child: MobileContainer(course: "Question Papers"))
+               )
               //  YoutubePlayerWeb(url: "https://www.youtube.com/watch?v=KfTtjdqLMrk",)
             ],
           ),

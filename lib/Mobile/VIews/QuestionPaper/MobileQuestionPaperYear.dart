@@ -19,6 +19,9 @@ class MobileQuestionPaperYear extends StatefulWidget {
 }
 
 class _MobileQuestionPaperYearState extends State<MobileQuestionPaperYear> {
+  List<QuestionpaperSpecificYears> specificYear = [];
+  List<Years> _searchResult = [];
+  TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,54 +42,142 @@ class _MobileQuestionPaperYearState extends State<MobileQuestionPaperYear> {
             ))
         ],
       ),
-      body: Scrollbar(
-        interactive: true,
-              child: Container(
-          padding: EdgeInsets.all(15),
-          child : FutureBuilder(
-            future: Networking.getAllQuestionpaperYear(widget.course,widget.semester,widget.subject),
-            builder: (_,snapshot)
-            {
-              if(snapshot.hasData)
-              {
-                List<QuestionpaperSpecificYears>? specificYear = snapshot.data as List<QuestionpaperSpecificYears>?;
-                return GridView.builder(
-                  physics: BouncingScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 15,
-                    crossAxisSpacing: 15
-                  ),
-                  itemCount: specificYear![0].courses.semesters.subjects.years.length ,
-                  //padhlo![0].courses.length,
-                  itemBuilder: (_,index)
+      body: Column(
+        children: [
+          searchBar(context),
+          Expanded(
+            child: Scrollbar(
+              interactive: true,
+                    child: Container(
+                padding: EdgeInsets.all(15),
+                child : FutureBuilder(
+                  future: Networking.getAllQuestionpaperYear(widget.course,widget.semester,widget.subject),
+                  builder: (_,snapshot)
                   {
-                   return GestureDetector(
-                     onTap: (){
-                       launchDrive(specificYear[0].courses.semesters.subjects.years[index].pdfUrl);
-                     },
-                     child: MobilePdfContainer(course: specificYear[0].courses.semesters.subjects.years[index].year.toString()),
-                     );
-                  },
-                );
-              }
-              else
-              {
-                return  GridView.count(
-                  physics: BouncingScrollPhysics(),
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 15,
-                  crossAxisSpacing: 15,
-                  children: [
-                   ShimmerContainer(),
-                   ShimmerContainer(),
-                   ShimmerContainer(),
-                   ShimmerContainer(),
-                  ],
-                );
-              }
-            }
+                    if(snapshot.hasData)
+                    {
+                      specificYear = (snapshot.data as List<QuestionpaperSpecificYears>?)!;
+                      return _searchResult.length != 0 ||
+                        searchController.text.isNotEmpty ? GridView.builder(
+                        physics: BouncingScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 15,
+                          crossAxisSpacing: 15
+                        ),
+                        itemCount: _searchResult.length,
+                        //padhlo![0].courses.length,
+                        itemBuilder: (_,index)
+                        {
+                         return Material(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(40),
+                                    ),
+                                    color: Theme.of(context).backgroundColor,
+                                    child: InkWell(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(40),
+                                        ),
+                           onTap: (){
+                            // Networking.getAllUnit("BCA","1","Physics");
+                            launchDrive(_searchResult[index].pdfUrl);
+                           },
+                           child: MobilePdfContainer(course: _searchResult[index].year.toString()),
+                           //course:padhlo[0].courses[index].course
+                           ),);
+                        },
+                      ) : GridView.builder(
+                        physics: BouncingScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 15,
+                          crossAxisSpacing: 15
+                        ),
+                        itemCount: specificYear[0].courses.semesters.subjects.years.length ,
+                        //padhlo![0].courses.length,
+                        itemBuilder: (_,index)
+                        {
+                         return Material(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(40),
+                                    ),
+                                    color: Theme.of(context).backgroundColor,
+                                    child: InkWell(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(40),
+                                        ),
+                           onTap: (){
+                             launchDrive(specificYear[0].courses.semesters.subjects.years[index].pdfUrl);
+                           },
+                           child: MobilePdfContainer(course: specificYear[0].courses.semesters.subjects.years[index].year.toString()),
+                           ),);
+                        },
+                      );
+                    }
+                    else
+                    {
+                      return  GridView.count(
+                        physics: BouncingScrollPhysics(),
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 15,
+                        crossAxisSpacing: 15,
+                        children: [
+                         ShimmerContainer(),
+                         ShimmerContainer(),
+                         ShimmerContainer(),
+                         ShimmerContainer(),
+                        ],
+                      );
+                    }
+                  }
+                ),
+              ),
+            ),
           ),
+        ],
+      ),
+    );
+  }
+    Widget searchBar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+          left: 15.0, right: 15.0, top: 10.0, bottom: 10.0),
+      child: Container(
+        child: TextField(
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+                borderRadius : BorderRadius.circular(20)
+              ),
+              hintText:StaticText.kSearch, 
+              prefixIcon: Icon(Icons.search),
+              suffixIcon: GestureDetector(
+                onTap: (){
+                  FocusScope.of(context).unfocus();
+                  searchController.clear();
+                  _searchResult.clear();
+                },
+                child: Icon(Icons.cancel_rounded)
+                )
+              ),
+          onChanged: (value) async {
+           if(specificYear.isNotEmpty)
+           {
+            _searchResult.clear();
+            if (value.isEmpty) {
+              setState(() {});
+              return;
+            }
+            setState(() {
+            specificYear[0].courses.semesters.subjects.years.forEach((searchValue) {
+              if (searchValue.year.toString().toLowerCase().contains(value.toLowerCase())) { 
+                _searchResult.add(searchValue);  
+              }
+            });
+            });
+           }
+          },
+          controller: searchController,
         ),
       ),
     );

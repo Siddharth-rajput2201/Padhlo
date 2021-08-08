@@ -9,13 +9,10 @@ class MobileListContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final double height =
         MediaQuery.of(context).size.height / DeviceConstraints.kHeight;
-    final double width =
-        MediaQuery.of(context).size.width / DeviceConstraints.kWidth;
     return Padding(
-      padding: const EdgeInsets.only(top : 10.0, bottom: 10.0),
+      padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: height * 60,
-        width: width * 250,
+        height: height * 50,
         decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,
           borderRadius: BorderRadius.all(

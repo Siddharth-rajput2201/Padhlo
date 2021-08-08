@@ -52,6 +52,7 @@ class StaticText
   static const String kTopics = "Topics : ";
   static const String kTopicPdf = "Topic Pdf : ";
   static const String kYear = "Year";
+  static const String kSearch = "Search...";
 }
 
 class DeviceConstraints
