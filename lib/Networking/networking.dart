@@ -221,4 +221,16 @@ class Networking {
   }
 }
 
+  static Future<bool> getServerStatus() async {
+  http.Response response;
+  response = await http.get(
+    Uri.parse(Api.getServerStatus),
+  );
+  if (json.decode(response.body) == true) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 }

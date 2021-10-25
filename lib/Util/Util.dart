@@ -30,11 +30,15 @@ class ThemeColor
    static const Color kdarkThemeContainerColor = Color(0xFF2C2C34);
    static const Color kdarkThemeShimmerDarkColor = Color(0xFF353d43);
    static const Color kdarkThemeShimmerLightColor = Color(0xFF7d8286);
+   static const Color kdarkThemeProgressIndicatorColor = Color(0xFF0DCEDA);
+
    static const Color klighThemeBackGroundColor = Color(0xFFEDF6E5);
    static const Color klightThemeContainerColor = Color(0xFF0DCEDA);
    static const Color klightThemeIconColor = Colors.black;
    static const Color klightThemeBaseColor = Color(0xFF0DCEDA);
    static const Color klightThemeHighlightColor = Color(0xFFb8fcfc);
+   static const Color klightThemeProgressIndicatorColor = Color(0xFF281c64);
+   static const Color klightThemeProgressIndicatorBackgroundColor = Color(0xFF304474);
 } 
 
 class StaticText
