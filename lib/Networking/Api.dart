@@ -17,5 +17,5 @@ class Api{
   static String getQuestionpaperYears = domain + '/questionPaperYears';
 
   // get serverStatus
-  static String getServerStatus = domain + '/getServerStatus';
+  static String getServerStatus = domain + '/serverStatus';
 }

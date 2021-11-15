@@ -39,8 +39,8 @@ class _MobileTopicState extends State<MobileTopic> {
   Widget build(BuildContext context) {
     final double height =
         MediaQuery.of(context).size.height / DeviceConstraints.kHeight;
-    final double width =
-        MediaQuery.of(context).size.width / DeviceConstraints.kWidth;
+    // final double width =
+    //     MediaQuery.of(context).size.width / DeviceConstraints.kWidth;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -70,8 +70,8 @@ class _MobileTopicState extends State<MobileTopic> {
               Text(StaticText.kUnitPdf,
                   style: TextStyle(fontSize: height * 20)),
               SizedBox(
-                height: height * 100,
-                width: width * 130,
+                // height: height * 100,
+                // width: width * 130,
                 child: Material(
                   borderRadius: BorderRadius.all(
                     Radius.circular(40),

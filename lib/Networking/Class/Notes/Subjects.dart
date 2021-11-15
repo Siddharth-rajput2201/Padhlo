@@ -62,16 +62,22 @@ class Semesters {
 
 class Subjects {
   late String subject;
+  late String subjectBookName;
+  late String subjectBookUrl;
 
-  Subjects({required this.subject});
+  Subjects({required this.subject,required this.subjectBookName,required this.subjectBookUrl});
 
   Subjects.fromJson(Map<String, dynamic> json) {
     subject = json['subject'];
+    subjectBookName = json['subjectBookName'];
+    subjectBookUrl = json['subjectBookUrl'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['subject'] = this.subject;
+    data['subjectBookName'] = this.subjectBookName;
+    data['subjectBookUrl'] = this.subjectBookUrl;
     return data;
   }
 }

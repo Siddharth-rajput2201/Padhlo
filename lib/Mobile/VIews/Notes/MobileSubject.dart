@@ -89,10 +89,21 @@ class _MobileSubjectState extends State<MobileSubject> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => MobileUnit(
-                                                course: widget.course,
-                                                semester: widget.semester,
-                                                subject: _searchResult[index]
-                                                    .subject),
+                                              course: widget.course,
+                                              semester: widget.semester,
+                                              subject:
+                                                  _searchResult[index].subject,
+                                              bookName: specificSubject[0]
+                                                  .courses
+                                                  .semesters
+                                                  .subjects[index]
+                                                  .subjectBookName,
+                                              bookUrl: specificSubject[0]
+                                                  .courses
+                                                  .semesters
+                                                  .subjects[index]
+                                                  .subjectBookUrl,
+                                            ),
                                           ),
                                         ).then((_) {
                                           FocusScope.of(context).unfocus();
@@ -136,19 +147,30 @@ class _MobileSubjectState extends State<MobileSubject> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => MobileUnit(
-                                                course: specificSubject[0]
-                                                    .courses
-                                                    .course,
-                                                semester: specificSubject[0]
-                                                    .courses
-                                                    .semesters
-                                                    .sem
-                                                    .toString(),
-                                                subject: specificSubject[0]
-                                                    .courses
-                                                    .semesters
-                                                    .subjects[index]
-                                                    .subject),
+                                              course: specificSubject[0]
+                                                  .courses
+                                                  .course,
+                                              semester: specificSubject[0]
+                                                  .courses
+                                                  .semesters
+                                                  .sem
+                                                  .toString(),
+                                              subject: specificSubject[0]
+                                                  .courses
+                                                  .semesters
+                                                  .subjects[index]
+                                                  .subject,
+                                              bookName: specificSubject[0]
+                                                  .courses
+                                                  .semesters
+                                                  .subjects[index]
+                                                  .subjectBookName,
+                                              bookUrl: specificSubject[0]
+                                                  .courses
+                                                  .semesters
+                                                  .subjects[index]
+                                                  .subjectBookUrl,
+                                            ),
                                           ),
                                         ).then((_) {
                                           FocusScope.of(context).unfocus();

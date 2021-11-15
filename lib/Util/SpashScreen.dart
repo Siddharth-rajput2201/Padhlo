@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:padhlo/Mobile/VIews/Mobile.dart';
+import 'package:padhlo/Networking/networking.dart';
+import 'package:padhlo/Util/ErrorScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({ Key? key }) : super(key: key);
@@ -10,8 +13,23 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    
     super.initState();
+    _redirect();  
+  }
+
+  void _redirect() async 
+  {
+    if(await Networking.getServerStatus() == true)
+    {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Mobile()));
+    }
+    else if(await Networking.getServerStatus() == false){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ErrorScreen()));
+    }
+    else
+    {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ErrorScreen()));
+    }
   }
   @override
   Widget build(BuildContext context) {

@@ -222,7 +222,8 @@ class Networking {
 }
 
   static Future<bool> getServerStatus() async {
-  http.Response response;
+    try{
+        http.Response response;
   response = await http.get(
     Uri.parse(Api.getServerStatus),
   );
@@ -231,6 +232,12 @@ class Networking {
   } else {
     return false;
   }
+  }
+  catch(error)
+  {
+    return false;
+  }
+
 }
 
 }
