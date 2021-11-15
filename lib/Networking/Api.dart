@@ -18,4 +18,5 @@ class Api{
 
   // get serverStatus
   static String getServerStatus = domain + '/serverStatus';
+  
 }
