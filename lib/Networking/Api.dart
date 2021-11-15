@@ -1,6 +1,6 @@
 class Api{
-  //static String domain = 'https://padhloapp.herokuapp.com' ; 
-  static String domain = 'http://192.168.0.103:3000';
+  static String domain = 'https://padhloapp.herokuapp.com' ; 
+  //static String domain = 'http://192.168.0.103:3000';
 
   // get notes data 
   static String getAllData = domain + '/alldata';
