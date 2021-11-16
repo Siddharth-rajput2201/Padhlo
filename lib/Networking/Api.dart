@@ -15,8 +15,6 @@ class Api{
   static String getQuestionpaperSemester = domain +'/questionPaperSemesters';
   static String getQuestionpaperSubject = domain +'/questionPaperSubjects';
   static String getQuestionpaperYears = domain + '/questionPaperYears';
-
   // get serverStatus
   static String getServerStatus = domain + '/serverStatus';
-  
 }
